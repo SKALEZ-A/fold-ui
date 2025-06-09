@@ -17,6 +17,7 @@ import {
   Zap,
   MoveRight,
   PhoneCall,
+  Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -376,24 +377,27 @@ export function JenerateLandingPage() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="mx-auto max-w-5xl py-12"
+              className="mx-auto max-w-3xl py-12"
             >
-              <div className="grid gap-8 md:grid-cols-3">
+              <div className="relative flex flex-col gap-12 md:gap-16">
+                {/* Vertical line connector */}
+                <div className="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-primary/30 via-primary/10 to-transparent rounded-full pointer-events-none" style={{zIndex:0}} />
+                {/* Steps */}
                 {[
                   {
-                    step: "01",
+                    icon: <Calendar className="h-8 w-8 text-primary" />, // Step 1: Create
                     title: "Create your form",
                     description:
                       "Design your registration form with our drag-and-drop builder. Add custom fields, branding, and payment options.",
                   },
                   {
-                    step: "02",
+                    icon: <Share2 className="h-8 w-8 text-primary" />, // Step 2: Share
                     title: "Share with your audience",
                     description:
                       "Publish your form with a custom URL, embed it on your website, or share via email and social media.",
                   },
                   {
-                    step: "03",
+                    icon: <Users className="h-8 w-8 text-primary" />, // Step 3: Manage
                     title: "Manage registrations",
                     description:
                       "Track registrations, process payments, and communicate with attendees all from one dashboard.",
@@ -402,13 +406,26 @@ export function JenerateLandingPage() {
                   <motion.div
                     key={index}
                     variants={itemFadeIn}
-                    className="flex flex-col items-center text-center"
+                    whileHover={{ scale: 1.03, boxShadow: "0 4px 24px 0 rgba(0,0,0,0.08)" }}
+                    className="relative z-10 flex items-start gap-6 group bg-white/90 rounded-xl p-6 shadow hover:shadow-lg transition-all border border-primary/10"
                   >
-                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-bold text-primary-foreground">
-                      {item.step}
+                    {/* Icon with animated ring */}
+                    <div className="relative flex flex-col items-center">
+                      <motion.div
+                        whileHover={{ scale: 1.15, rotate: 8 }}
+                        className="flex items-center justify-center h-16 w-16 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 shadow"
+                      >
+                        {item.icon}
+                      </motion.div>
+                      {/* Connector line except for last step */}
+                      {index < 2 && (
+                        <div className="w-1 h-12 bg-primary/20 mt-2 rounded-full" />
+                      )}
                     </div>
-                    <h3 className="mb-2 text-xl font-bold">{item.title}</h3>
-                    <p className="text-muted-foreground">{item.description}</p>
+                    <div className="flex-1">
+                      <h3 className="mb-2 text-xl font-bold text-left">{item.title}</h3>
+                      <p className="text-muted-foreground text-left">{item.description}</p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
