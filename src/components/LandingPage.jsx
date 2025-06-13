@@ -18,6 +18,7 @@ import {
   MoveRight,
   PhoneCall,
   Share2,
+  Slack,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -139,7 +140,7 @@ const TestimonialCard = ({ quote, author, company }) => {
   );
 };
 
-const IntegrationCard = ({ icon, name }) => {
+const IntegrationCard = ({ icon, name, description, category }) => {
   return (
     <motion.div
       variants={itemFadeIn}
@@ -154,6 +155,7 @@ const IntegrationCard = ({ icon, name }) => {
       <h3 className="font-semibold text-lg text-gray-800 group-hover:text-primary transition-colors duration-300">
         {name}
       </h3>
+      <p className="text-muted-foreground text-sm">{description}</p>
     </motion.div>
   );
 };
@@ -386,40 +388,150 @@ export function JenerateLandingPage() {
           </div>
         </section>
 
-        {/* Integrations Section */}
-        <section id="integrations" className="w-full py-12 md:py-24 lg:py-32">
+        {/* Enhanced Integrations Section */}
+        <section id="integrations" className="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-b from-white to-gray-50/50">
           <div className="w-full max-w-7xl mx-auto px-4 md:px-8">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-3">
-                <Badge variant="outline">Integrations</Badge>
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                className="space-y-3"
+              >
+                <Badge className="px-4 py-1.5 bg-primary/10 text-primary border-primary/20 rounded-full font-medium">
+                  Powerful Integrations
+                </Badge>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Connect with your favorite tools
+                  Connect your favorite tools
                 </h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                  Jenerate seamlessly integrates with the tools you already use to run your business.
+                  Seamlessly integrate with the tools you already use to streamline your workflow and boost productivity.
                 </p>
-              </div>
+              </motion.div>
             </div>
+
+            {/* Integration categories */}
+            <div className="flex flex-wrap justify-center gap-2 mb-10">
+              {["All", "Marketing", "Payments", "Communication", "Productivity"].map((category) => (
+                <Button 
+                  key={category} 
+                  variant={category === "All" ? "default" : "outline"} 
+                  size="sm" 
+                  className={`rounded-full px-4 ${category === "All" ? "" : "hover:bg-primary/10 hover:text-primary"}`}
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+
             <motion.div
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-3 lg:grid-cols-4"
+              className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
             >
               {[
-                { icon: <Mail className="h-6 w-6" />, name: "Mailchimp" },
-                { icon: <Calendar className="h-6 w-6" />, name: "Google Calendar" },
-                { icon: <CreditCard className="h-6 w-6" />, name: "Stripe" },
-                { icon: <CreditCard className="h-6 w-6" />, name: "PayPal" },
-                { icon: <Mail className="h-6 w-6" />, name: "ConvertKit" },
-                { icon: <Calendar className="h-6 w-6" />, name: "Outlook" },
-                { icon: <Users className="h-6 w-6" />, name: "Zoom" },
-                { icon: <Mail className="h-6 w-6" />, name: "ActiveCampaign" },
+                { 
+                  icon: <Mail className="h-5 w-5" />, 
+                  name: "Mailchimp", 
+                  description: "Sync your attendee data with Mailchimp to automate email marketing campaigns and follow-ups.",
+                  category: "Marketing"
+                },
+                { 
+                  icon: <Calendar className="h-5 w-5" />, 
+                  name: "Google Calendar", 
+                  description: "Automatically add events to attendees' calendars with reminders and all event details.",
+                  category: "Productivity"
+                },
+                { 
+                  icon: <CreditCard className="h-5 w-5" />, 
+                  name: "Stripe", 
+                  description: "Process payments securely with Stripe's powerful payment infrastructure and detailed reporting.",
+                  category: "Payments"
+                },
+                { 
+                  icon: <CreditCard className="h-5 w-5" />, 
+                  name: "PayPal", 
+                  description: "Offer PayPal as a payment option for customers who prefer this widely trusted platform.",
+                  category: "Payments"
+                },
+                { 
+                  icon: <Mail className="h-5 w-5" />, 
+                  name: "ConvertKit", 
+                  description: "Connect with ConvertKit to build your email list and create automated email sequences.",
+                  category: "Marketing"
+                },
+                { 
+                  icon: <Calendar className="h-5 w-5" />, 
+                  name: "Outlook", 
+                  description: "Sync with Microsoft Outlook to manage event schedules and attendee communications.",
+                  category: "Productivity"
+                },
+                { 
+                  icon: <Users className="h-5 w-5" />, 
+                  name: "Zoom", 
+                  description: "Automatically generate and distribute Zoom links for virtual events and webinars.",
+                  category: "Communication"
+                },
+                { 
+                  icon: <Mail className="h-5 w-5" />, 
+                  name: "ActiveCampaign", 
+                  description: "Leverage ActiveCampaign's automation to nurture leads and improve conversion rates.",
+                  category: "Marketing"
+                },
+                { 
+                  icon: <Slack className="h-5 w-5" />, 
+                  name: "Slack", 
+                  description: "Get real-time notifications in Slack when someone registers for your event.",
+                  category: "Communication"
+                },
               ].map((integration, index) => (
-                <IntegrationCard key={index} icon={integration.icon} name={integration.name} />
+                <IntegrationCard 
+                  key={index} 
+                  icon={integration.icon} 
+                  name={integration.name} 
+                  description={integration.description}
+                  category={integration.category}
+                />
               ))}
             </motion.div>
+
+            {/* View all integrations button */}
+            <div className="flex justify-center mt-12">
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button className="rounded-full px-8 py-6 bg-white border shadow-sm text-black hover:bg-gray-50 hover:shadow-md">
+                  <span className="mr-2">View all integrations</span>
+                  <MoveRight className="h-4 w-4" />
+                </Button>
+              </motion.div>
+            </div>
+
+            {/* Integration stats */}
+            <div className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { number: "50+", label: "Integrations" },
+                { number: "99.9%", label: "Uptime" },
+                { number: "24/7", label: "Support" },
+                { number: "5 min", label: "Setup time" },
+              ].map((stat, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  viewport={{ once: true }}
+                  className="flex flex-col items-center justify-center"
+                >
+                  <span className="text-4xl md:text-5xl font-bold text-primary">{stat.number}</span>
+                  <span className="text-sm text-muted-foreground mt-1">{stat.label}</span>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 

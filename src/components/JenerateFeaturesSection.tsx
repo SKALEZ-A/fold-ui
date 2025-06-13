@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Calendar, 
@@ -62,7 +62,7 @@ const Grid = ({
   );
 };
 
-function GridPattern({ width, height, x, y, squares, ...props }: any) {
+function GridPattern({ width, height, x, y, squares, ...props }: { width: number, height: number, x: string, y: string, squares: number[][], [key: string]: unknown }) {
   const patternId = useId();
 
   return (
@@ -87,14 +87,14 @@ function GridPattern({ width, height, x, y, squares, ...props }: any) {
       />
       {squares && (
         <svg x={x} y={y} className="overflow-visible">
-          {squares.map(([x, y]: any) => (
+          {squares.map((square: number[]) => (
             <rect
               strokeWidth="0"
-              key={`${x}-${y}`}
+              key={`${square[0] ?? 0}-${square[1] ?? 0}`}
               width={width + 1}
               height={height + 1}
-              x={x * width}
-              y={y * height}
+              x={(square[0] ?? 0) * width}
+              y={(square[1] ?? 0) * height}
             />
           ))}
         </svg>
@@ -341,7 +341,6 @@ export function JenerateFeaturesSection({
 }: JenerateFeaturesSectionProps) {
   const [currentFeature, setCurrentFeature] = useState(0);
   const [progress, setProgress] = useState(0);
-  const featureRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const interval = setInterval(() => {
