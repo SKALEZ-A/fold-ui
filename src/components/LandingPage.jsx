@@ -24,6 +24,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { JenerateFeaturesSection } from "@/components/JenerateFeaturesSection";
 
 // Animation variants
 const fadeIn = {
@@ -142,11 +143,17 @@ const IntegrationCard = ({ icon, name }) => {
   return (
     <motion.div
       variants={itemFadeIn}
-      whileHover={{ scale: 1.05 }}
-      className="flex flex-col items-center justify-center rounded-xl border bg-background p-6 text-center shadow-sm"
+      whileHover={{ scale: 1.08, rotate: 2 }}
+      transition={{ type: "spring", stiffness: 300, damping: 18 }}
+      className="flex flex-col items-center justify-center rounded-2xl border-0 p-6 text-center shadow-lg bg-gradient-to-br from-primary/10 via-sky-100 to-pink-100 hover:from-pink-200 hover:to-sky-200 group cursor-pointer transition-all duration-300"
+      style={{ boxShadow: '0 4px 24px 0 rgba(0,0,0,0.08)' }}
     >
-      <div className="mb-4 rounded-full bg-primary/10 p-3 text-primary">{icon}</div>
-      <h3 className="font-medium">{name}</h3>
+      <div className="mb-4 rounded-full bg-white p-4 shadow group-hover:bg-primary/20 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+        {icon}
+      </div>
+      <h3 className="font-semibold text-lg text-gray-800 group-hover:text-primary transition-colors duration-300">
+        {name}
+      </h3>
     </motion.div>
   );
 };
@@ -161,13 +168,14 @@ function TrustedBySection() {
           <p className="text-sm text-muted-foreground font-semibold tracking-widest uppercase">TRUSTED BY ORGANIZATIONS WORLDWIDE</p>
         </div>
         <div className="relative overflow-hidden py-8">
-          <div className="flex gap-12 animate-slide group" style={{ animation: 'slide 30s linear infinite' }}>
+          <div className="flex gap-4 md:gap-12 animate-slide group" style={{ animation: 'slide 30s linear infinite' }}>
             {logos.concat(logos).concat(logos).map((logo, idx) => (
-              <div key={idx} className="flex items-center justify-center h-20 w-28 bg-white rounded-xl shadow p-4 border hover:scale-105 transition-transform duration-300">
+              <div key={idx} className="flex items-center justify-center h-12 w-16 md:h-20 md:w-28 bg-white rounded-xl shadow p-2 md:p-4 border hover:scale-105 transition-transform duration-300">
                 <span className="sr-only">{logo.name}</span>
                 <span
                   dangerouslySetInnerHTML={{ __html: logo.svg }}
-                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '64px', height: '64px', maxWidth: '100%', maxHeight: '100%' }}
+                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '32px', height: '32px', maxWidth: '100%', maxHeight: '100%' }}
+                  className="md:w-16 md:h-16 w-8 h-8"
                 />
               </div>
             ))}
@@ -263,9 +271,6 @@ export function JenerateLandingPage() {
           className="w-full py-12 md:py-24 lg:py-32 bg-[#fafbfb] relative"
           style={{
             backgroundColor: '#fafbfb',
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='0' y='0' width='40' height='40' fill='none'/%3E%3Cpath d='M40 0H0V40' stroke='%23e5e7eb' stroke-width='1'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-            backgroundSize: '40px 40px',
             zIndex: 0,
           }}
         >
@@ -304,59 +309,7 @@ export function JenerateLandingPage() {
         <TrustedBySection />
 
         {/* Features Section */}
-        <section id="features" className="w-full py-12 md:py-24 lg:py-32">
-          <div className="w-full max-w-7xl mx-auto px-4 md:px-8">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-3">
-                <Badge variant="outline">Features</Badge>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                  Everything you need to manage registrations
-                </h2>
-                <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                  Jenerate provides all the tools you need to create, manage, and optimize your registration process.
-                </p>
-              </div>
-            </div>
-            <motion.div
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="mx-auto grid max-w-5xl gap-6 py-12 md:grid-cols-2 lg:grid-cols-3"
-            >
-              <FeatureCard
-                icon={<Calendar className="h-10 w-10" />}
-                title="Custom Registration Forms"
-                description="Create beautiful, branded registration forms for any type of event or course."
-              />
-              <FeatureCard
-                icon={<CreditCard className="h-10 w-10" />}
-                title="Payment Processing"
-                description="Accept payments securely with multiple payment gateway options."
-              />
-              <FeatureCard
-                icon={<Users className="h-10 w-10" />}
-                title="Attendee Management"
-                description="Easily manage registrants, send communications, and track attendance."
-              />
-              <FeatureCard
-                icon={<Mail className="h-10 w-10" />}
-                title="Email Marketing"
-                description="Integrate with popular email marketing platforms to nurture your audience."
-              />
-              <FeatureCard
-                icon={<CheckCircle className="h-10 w-10" />}
-                title="Automated Workflows"
-                description="Set up automated confirmation emails, reminders, and follow-ups."
-              />
-              <FeatureCard
-                icon={<Zap className="h-10 w-10" />}
-                title="Analytics & Reporting"
-                description="Get insights into registration trends, conversion rates, and revenue."
-              />
-            </motion.div>
-          </div>
-        </section>
+        <JenerateFeaturesSection />
 
         {/* How It Works Section */}
         <section id="how-it-works" className="w-full py-12 md:py-24 lg:py-32 bg-muted/30">
@@ -548,92 +501,50 @@ export function JenerateLandingPage() {
       </main>
 
       {/* Footer */}
-      <footer className="w-full border-t bg-muted/20">
-        <div className="container grid gap-8 px-4 py-10 md:px-6 lg:grid-cols-4 mx-auto max-w-7xl rounded-xl border bg-white/80 shadow-sm mt-8" style={{ borderColor: '#e5e7eb', boxShadow: '0 2px 16px 0 rgba(0,0,0,0.04)' }}>
-          <div className="space-y-3 col-span-4 flex flex-col items-center text-center">
-            <Link href="/" className="flex items-center space-x-3 justify-center">
-              <motion.div
-                whileHover={{ rotate: 5, scale: 1.1 }}
-                transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                className="h-10 w-10 rounded-xl bg-primary flex items-center justify-center"
-              >
-                <Calendar className="h-5 w-5 text-primary-foreground" />
-              </motion.div>
-              <span className="font-bold text-xl">Jenerate</span>
+      <footer className="w-full bg-gray-900 text-gray-100 border-t border-gray-800 mt-12">
+        <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10">
+          <div>
+            <Link href="/" className="flex items-center space-x-3 mb-4">
+              <span className="inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary">
+                <Calendar className="h-6 w-6 text-primary-foreground" />
+              </span>
+              <span className="font-bold text-2xl">Jenerate</span>
             </Link>
-            <p className="text-sm text-muted-foreground max-w-md">
-              Create user-friendly registration forms for courses, events, and workshops. Seamlessly collect payments,
-              manage attendees, and integrate with your favorite tools.
+            <p className="text-gray-400 text-sm max-w-xs">
+              Create user-friendly registration forms for courses, events, and workshops. Seamlessly collect payments, manage attendees, and integrate with your favorite tools.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:col-span-2 lg:grid-cols-3">
-            <div>
-              <h3 className="text-lg font-medium">Product</h3>
-              <nav className="mt-4 flex flex-col space-y-2 text-sm">
-                <Link href="#features" className="text-muted-foreground hover:text-foreground">
-                  Features
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Pricing
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Security
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Roadmap
-                </Link>
-              </nav>
-            </div>
-            <div>
-              <h3 className="text-lg font-medium">Resources</h3>
-              <nav className="mt-4 flex flex-col space-y-2 text-sm">
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Blog
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Documentation
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Guides
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Help Center
-                </Link>
-              </nav>
-            </div>
-            <div>
-              <h3 className="text-lg font-medium">Company</h3>
-              <nav className="mt-4 flex flex-col space-y-2 text-sm">
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  About
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Careers
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Contact
-                </Link>
-                <Link href="#" className="text-muted-foreground hover:text-foreground">
-                  Partners
-                </Link>
-              </nav>
-            </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Product</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="#features" className="hover:underline">Features</Link></li>
+              <li><Link href="#" className="hover:underline">Pricing</Link></li>
+              <li><Link href="#" className="hover:underline">Security</Link></li>
+              <li><Link href="#" className="hover:underline">Roadmap</Link></li>
+            </ul>
           </div>
-          <div className="space-y-3">
-            <h3 className="text-lg font-medium">Subscribe to our newsletter</h3>
-            <p className="text-sm text-muted-foreground">
-              Get the latest updates on new features, case studies, and tips.
-            </p>
-            <form className="flex space-x-3">
-              <Input type="email" placeholder="Enter your email" className="max-w-lg flex-1" />
-              <Button type="submit">Subscribe</Button>
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Company</h3>
+            <ul className="space-y-2 text-sm">
+              <li><Link href="#" className="hover:underline">About</Link></li>
+              <li><Link href="#" className="hover:underline">Careers</Link></li>
+              <li><Link href="#" className="hover:underline">Contact</Link></li>
+              <li><Link href="#" className="hover:underline">Partners</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Newsletter</h3>
+            <p className="text-gray-400 text-sm mb-4">Get the latest updates on new features, case studies, and tips.</p>
+            <form className="flex flex-col sm:flex-row gap-2">
+              <Input type="email" placeholder="Enter your email" className="flex-1 bg-gray-800 border-gray-700 text-gray-100 placeholder-gray-400" />
+              <Button type="submit" className="bg-primary text-primary-foreground">Subscribe</Button>
             </form>
           </div>
         </div>
-        <div className="border-t">
-          <div className="container flex flex-col items-center justify-between gap-3 py-6 md:h-16 md:flex-row md:py-0 mx-auto max-w-7xl">
-            <span className="text-sm text-muted-foreground">© {new Date().getFullYear()} Jenerate. All rights reserved.</span>
-            <div className="flex gap-4 text-sm text-muted-foreground">
+        <div className="border-t border-gray-800">
+          <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <span className="text-sm text-gray-400">© {new Date().getFullYear()} Jenerate. All rights reserved.</span>
+            <div className="flex gap-4 text-sm text-gray-400">
               <a href="/terms" className="hover:underline">Terms</a>
               <a href="/privacy" className="hover:underline">Privacy</a>
               <a href="/cookies" className="hover:underline">Cookies</a>
